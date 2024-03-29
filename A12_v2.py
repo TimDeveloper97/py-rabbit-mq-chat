@@ -105,6 +105,7 @@ class ChatApplication(tk.Tk):
         self.title("Chat Application")
         self.geometry("600x400")
 
+        self.login = root
         # GUI components
         self.username_label = tk.Label(self, text="Username:")
         self.username_entry = tk.Entry(self)
@@ -114,6 +115,7 @@ class ChatApplication(tk.Tk):
         self.message_entry = tk.Entry(self)
         self.send_button = tk.Button(self, text="Send", command=self.send_message)
         self.message_display = tk.Text(self, height=20, width=50)
+        self.disconnect_button = tk.Button(self, text="Disconnect", command=self.disconnect)
 
         # Grid layout
         self.username_label.grid(row=0, column=0)
@@ -123,6 +125,7 @@ class ChatApplication(tk.Tk):
         self.message_label.grid(row=2, column=0)
         self.message_entry.grid(row=2, column=1)
         self.send_button.grid(row=2, column=2)
+        self.disconnect_button.grid(row=2, column=3)
         self.message_display.grid(row=3, column=0, columnspan=3)
 
         # Set value
@@ -156,6 +159,10 @@ class ChatApplication(tk.Tk):
             self.message_display.insert(tk.END, f"{message_body}\n")
             self.message_display.see(tk.END)  # Scroll to the end
             self.message_entry.delete(0, tk.END)
+    
+    def disconnect(self):
+        self.connection.close()
+        self.destroy()
 
     def receive_messages(self):
         result = self.channel.queue_declare(queue="", exclusive=True)

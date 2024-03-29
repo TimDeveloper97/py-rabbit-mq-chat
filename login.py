@@ -44,6 +44,5 @@ room.pack()
 join.pack()
 cancel.pack()
 
-
 root.withdraw()
 root.mainloop() 
